@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Toko Ponsel Lhokseumawe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3498db;
+      --secondary: #2c3e50;
+      --accent: #e74c3c;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --success: #2ecc71;
+      --warning: #f39c12;
+      --text: #333;
+      --text-light: #7f8c8d;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: var(--text);
+    }
+    
+    .login-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+    }
+    
+    .login-header {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .login-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+    
+    .login-header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    
+    .login-form {
+      padding: 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+      outline: none;
+    }
+    
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .remember-me input {
+      width: auto;
+    }
+    
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+    
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .login-button:hover {
+      background-color: #2980b9;
+    }
+    
+    .demo-accounts {
+      margin-top: 30px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      padding: 20px;
+    }
+    
+    .demo-accounts h3 {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      color: var(--dark);
+      text-align: center;
+    }
+    
+    .demo-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    
+    .demo-table th {
+      background-color: var(--light);
+      padding: 8px;
+      text-align: center;
+    }
+    
+    .demo-table td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .demo-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .demo-role {
+      font-weight: 500;
+      color: var(--primary);
+    }
+    
+    .demo-credentials {
+      font-family: monospace;
+      color: var(--accent);
+    }
+    
+    /* Toast Notification */
+    .toast {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: var(--accent);
+      color: white;
+      text-align: center;
+      border-radius: 4px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1001;
+      right: 30px;
+      bottom: 30px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+    
+    @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+    
+    @keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+    }
+    
+    /* Responsive */
+    @media (max-width: 576px) {
+      .login-container {
+        margin: 20px;
+      }
+      
+      .login-header {
+        padding: 20px;
+      }
+      
+      .login-form {
+        padding: 20px;
+      }
+      
+      .demo-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <h1>Toko Ponsel Lhokseumawe</h1>
+      <p>Sistem E-Commerce Toko Ponsel Terintegrasi</p>
+    </div>
+    
+    <div class="login-form">
+      <h2 style="margin-bottom: 20px; text-align: center;">Masuk ke Akun Anda</h2>
+      
+     <form action="login.php" method="POST">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  
+  <div class="form-options">
+    <div class="remember-me">
+      <input type="checkbox" id="remember" name="remember">
+      <label for="remember">Ingat saya</label>
+    </div>
+    <a href="#" class="forgot-password">Lupa password?</a>
+  </div>
+  
+  <button type="submit" class="login-button">Masuk</button>
+</form>
+      
+      <div class="demo-accounts">
+        <h3>Akun Demo untuk Testing:</h3>
+        <table class="demo-table">
+          <tr>
+            <th>Admin</th>
+            <th>Pemilik Toko</th>
+            <th>Customer</th>
+          </tr>
+          <tr>
+            <td class="demo-credentials">admin / admin124</td>
+            <td class="demo-credentials">owner / owner124</td>
+            <td class="demo-credentials">customer / customer124</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // User data
+    const users = [
+      {
+        id: 1,
+        username: 'admin',
+        password: 'admin124',
+        role: 'admin',
+        name: 'Administrator'
+      },
+      {
+        id: 2,
+        username: 'owner',
+        password: 'owner124',
+        role: 'owner',
+        name: 'Pemilik Toko'
+      },
+      {
+        id: 3,
+        username: 'customer',
+        password: 'customer124',
+        role: 'customer',
+        name: 'Pelanggan'
+      }
+    ];
+
+    // DOM Elements
+    const loginForm = document.getElementById('loginForm');
+    const toast = document.getElementById('toast');
+
+    // Show toast notification
+    function showToast(message, isError = false) {
+      toast.textContent = message;
+      toast.style.backgroundColor = isError ? 'var(--accent)' : 'var(--success)';
+      toast.className = 'toast show';
+      
+      setTimeout(() => {
+        toast.className = toast.className.replace('show', '');
+      }, 3000);
+    }
+
+   // Handle form submission
+loginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const rememberMe = document.getElementById('remember').checked;
+  
+  // Find user
+  const user = users.find(u => u.username === username && u.password === password);
+  
+  if (user) {
+    // Save user session
+    const sessionData = {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      name: user.name,
+      timestamp: new Date().getTime()
+    };
+    
+    if (rememberMe) {
+      localStorage.setItem('userSession', JSON.stringify(sessionData));
+    } else {
+      sessionStorage.setItem('userSession', JSON.stringify(sessionData));
+    }
+    
+    showToast(`Selamat datang, ${user.name}!`);
+    
+    // Redirect sesuai role
+    setTimeout(() => {
+      if (user.role === 'admin') {
+        window.location.href = 'admin.php';
+      } else if (user.role === 'owner') {
+        window.location.href = 'owner.php';
+      } else if (user.role === 'customer') {
+        window.location.href = 'customer.html';
+      }
+    }, 1000);
+  } else {
+    showToast('Username atau password salah!', true);
+  }
+});
+
+  </script>
+</body>
+</html>
